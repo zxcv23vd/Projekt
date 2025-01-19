@@ -1,0 +1,24 @@
+# Bazowy obraz Pythona
+FROM python:3.9-slim
+
+# Instalacja zależności systemowych wymaganych przez matplotlib i tkinter
+RUN apt-get update && apt-get install -y \
+    python3-tk \
+    libx11-6 \
+    libglib2.0-0 \
+    libxext6 \
+    libsm6 \
+    libxrender1 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Instalacja bibliotek Pythona
+RUN pip install matplotlib numpy
+
+# Ustawienie katalogu roboczego w kontenerze
+WORKDIR /app
+
+# Kopiowanie wszystkich plików do kontenera
+COPY . /app
+
+# Ustawienie domyślnego polecenia do uruchomienia programu
+CMD ["python", "Projekt.py"]
